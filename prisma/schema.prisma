@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AppUser {
+  username    String    @id
+  password    String
+  displayname String
+  isactive    Boolean   @default(true)
+  Payment     Payment[]
+}
+
+model Item {
+  id              String          @id
+  name            String
+  price           Float
+  allowAjustPrice Boolean         @default(false)
+  PaymentDetail   PaymentDetail[]
+}
+
+model Payer {
+  id      String    @id
+  name    String
+  notes   String?
+  Payment Payment[]
+}
+
+model Payment {
+  id            Int             @id @default(autoincrement())
+  date          DateTime        @default(now())
+  Payer         Payer           @relation(fields: [payerId], references: [id])
+  payerId       String
+  AppUser       AppUser         @relation(fields: [appUsername], references: [username])
+  appUsername   String
+  PaymentDetail PaymentDetail[]
+}
+
+model PaymentDetail {
+  id        Int      @id @default(autoincrement())
+  Payment   Payment  @relation(fields: [paymentId], references: [id])
+  paymentId Int
+  Item      Item     @relation(fields: [itemId], references: [id])
+  itemId    String
+  price     Float
+  createdAt DateTime @default(now())
+}
