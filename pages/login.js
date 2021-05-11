@@ -1,13 +1,20 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/client";
+import { signIn, useSession } from "next-auth/client";
 
 const Login = () => {
 	const router = useRouter();
+	const [session, sessionLoading] = useSession();
 	const [errorMessage, setErrorMessage] = useState(null);
 
 	const usernameField = useRef();
 	const passwordField = useRef();
+
+	// Redirect if logged in
+	if (sessionLoading) return null;
+	if (!sessionLoading && session) {
+		router.replace("/");
+	}
 
 	const loginHandler = async (event) => {
 		event.preventDefault();
