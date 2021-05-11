@@ -33,10 +33,10 @@ const Login = () => {
 	};
 
 	return (
-		<div className="w-5/6 mt-8 mx-auto">
+		<div className="pagecontainer">
 			{errorMessage && (
 				<div className="flex justify-center mt-6">
-					<p className="flex justify-center items-center w-1/2 px-4 h-10 bg-red-200 rounded-lg">
+					<p className="alert-error w-1/2">
 						<span className="font-bold mr-2">Error:</span>
 						{errorMessage}
 					</p>
@@ -52,7 +52,7 @@ const Login = () => {
 							Username:
 						</label>
 						<input
-							className="w-48 h-8 mx-3 border-b-2 outline-none border-gray-400"
+							className="textfield w-48"
 							type="text"
 							id="username"
 							ref={usernameField}
@@ -63,18 +63,14 @@ const Login = () => {
 							Password:
 						</label>
 						<input
-							className="w-48 h-8 mx-3 border-b-2 outline-none border-gray-400"
+							className="textfield w-48"
 							type="password"
 							id="password"
 							ref={passwordField}
 						/>
 					</div>
 					<div className="mt-6">
-						<input
-							className="px-6 h-10 bg-theme-main text-theme-opposite font-semibold rounded-md cursor-pointer hover:opacity-90 hover:shadow-sm"
-							type="submit"
-							value="Login"
-						/>
+						<input className="btn" type="submit" value="Login" />
 					</div>
 				</form>
 			</div>
