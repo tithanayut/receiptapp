@@ -22,14 +22,22 @@ const handler = async (req, res) => {
 		}
 
 		const prisma = new PrismaClient();
-		const data = await prisma.item.findMany({
-			skip: (page - 1) * itemsPerPage,
-			take: itemsPerPage,
-			orderBy: {
-				id: "asc",
-			},
-		});
-		await prisma.$disconnect();
+		let data;
+		try {
+			data = await prisma.item.findMany({
+				skip: (page - 1) * itemsPerPage,
+				take: itemsPerPage,
+				orderBy: {
+					id: "asc",
+				},
+			});
+		} catch {
+			return res
+				.status(500)
+				.json({ errors: ["Database connection failed"] });
+		} finally {
+			await prisma.$disconnect();
+		}
 
 		return res.status(200).json({
 			page,
