@@ -19,12 +19,20 @@ export default NextAuth({
 
 				// Query from DB
 				const prisma = new PrismaClient();
-				const user = await prisma.appUser.findUnique({
-					where: {
-						username,
-					},
-				});
-				await prisma.$disconnect();
+				let user;
+				try {
+					user = await prisma.appUser.findUnique({
+						where: {
+							username,
+						},
+					});
+				} catch {
+					return res
+						.status(500)
+						.json({ errors: ["Database connection failed"] });
+				} finally {
+					await prisma.$disconnect();
+				}
 
 				// Check if user exists
 				if (!user) {
