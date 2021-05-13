@@ -22,13 +22,18 @@ const handler = async (req, res) => {
 		}
 
 		const prisma = new PrismaClient();
-		let data;
+		let data, aggregations;
 		try {
 			data = await prisma.payer.findMany({
 				skip: (page - 1) * payersPerPage,
 				take: payersPerPage,
 				orderBy: {
 					id: "asc",
+				},
+			});
+			aggregations = await prisma.payer.aggregate({
+				count: {
+					id: true,
 				},
 			});
 		} catch {
@@ -41,7 +46,9 @@ const handler = async (req, res) => {
 
 		return res.status(200).json({
 			page,
+			totalRecords: aggregations.count.id,
 			dataPerPage: payersPerPage,
+			totalPages: Math.ceil(aggregations.count.id / payersPerPage),
 			data,
 		});
 	}
