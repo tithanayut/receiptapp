@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .pagecontainer {
-	@apply w-5/6 mt-8 mx-auto;
+	@apply w-5/6 my-8 mx-auto;
 }
 
 th,
