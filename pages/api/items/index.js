@@ -10,27 +10,42 @@ const handler = async (req, res) => {
 	}
 
 	if (req.method === "GET") {
-		if (!req.query.page) {
-			return res.status(400).json({ errors: ["Page not specified"] });
-		}
-
-		const page = Number(req.query.page);
-		if (!Number.isInteger(page) || page < 1) {
-			return res
-				.status(400)
-				.json({ errors: ["Cannot parse page number"] });
-		}
-
 		const prisma = new PrismaClient();
-		let data;
+		let data, aggregations;
+		let page, totalRecords, totalPages;
 		try {
-			data = await prisma.item.findMany({
-				skip: (page - 1) * itemsPerPage,
-				take: itemsPerPage,
-				orderBy: {
-					id: "asc",
+			aggregations = await prisma.item.aggregate({
+				count: {
+					id: true,
 				},
 			});
+
+			totalRecords = aggregations.count.id;
+			totalPages = Math.ceil(aggregations.count.id / itemsPerPage);
+
+			// Query page data if page number exists
+			if (req.query.page) {
+				page = Number(req.query.page);
+				// Validate page number
+				if (!Number.isInteger(page)) {
+					return res
+						.status(400)
+						.json({ errors: ["Cannot parse page number"] });
+				}
+				if (page < 1 || page > totalPages) {
+					return res
+						.status(400)
+						.json({ errors: ["Page does not exist"] });
+				}
+
+				data = await prisma.item.findMany({
+					skip: (page - 1) * itemsPerPage,
+					take: itemsPerPage,
+					orderBy: {
+						id: "asc",
+					},
+				});
+			}
 		} catch {
 			return res
 				.status(500)
@@ -39,11 +54,17 @@ const handler = async (req, res) => {
 			await prisma.$disconnect();
 		}
 
-		return res.status(200).json({
-			page,
+		let response = {
+			totalRecords,
 			dataPerPage: itemsPerPage,
-			data,
-		});
+			totalPages,
+		};
+		// Inject data to response if exist
+		if (req.query.page) {
+			response.page = page;
+			response.data = data;
+		}
+		return res.status(200).json(response);
 	}
 
 	return res.status(400).json({ errors: ["Method not supported"] });
