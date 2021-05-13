@@ -67,7 +67,7 @@ const handler = async (req, res) => {
 		return res.status(200).json(response);
 	}
 
-	return res.status(400).json({ errors: ["Method not supported"] });
+	return res.status(405).json({ errors: ["Method not supported"] });
 };
 
 export default handler;
