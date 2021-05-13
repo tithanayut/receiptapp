@@ -10,47 +10,61 @@ const handler = async (req, res) => {
 	}
 
 	if (req.method === "GET") {
-		if (!req.query.page) {
-			return res.status(400).json({ errors: ["Page not specified"] });
-		}
-
-		const page = Number(req.query.page);
-		if (!Number.isInteger(page) || page < 1) {
-			return res
-				.status(400)
-				.json({ errors: ["Cannot parse page number"] });
-		}
-
 		const prisma = new PrismaClient();
 		let data, aggregations;
+		let page, totalRecords, totalPages;
 		try {
-			data = await prisma.payer.findMany({
-				skip: (page - 1) * payersPerPage,
-				take: payersPerPage,
-				orderBy: {
-					id: "asc",
-				},
-			});
 			aggregations = await prisma.payer.aggregate({
 				count: {
 					id: true,
 				},
 			});
-		} catch {
+
+			totalRecords = aggregations.count.id;
+			totalPages = Math.ceil(aggregations.count.id / payersPerPage);
+
+			// Query page data if page number exists
+			if (req.query.page) {
+				page = Number(req.query.page);
+				// Validate page number
+				if (!Number.isInteger(page)) {
+					return res
+						.status(400)
+						.json({ errors: ["Cannot parse page number"] });
+				}
+				if (page < 1 || page > totalPages) {
+					return res
+						.status(400)
+						.json({ errors: ["Page does not exist"] });
+				}
+
+				data = await prisma.payer.findMany({
+					skip: (page - 1) * payersPerPage,
+					take: payersPerPage,
+					orderBy: {
+						id: "asc",
+					},
+				});
+			}
+		} catch (err) {
 			return res
 				.status(500)
-				.json({ errors: ["Database connection failed"] });
+				.json({ errors: ["Database connection failed", err] });
 		} finally {
 			await prisma.$disconnect();
 		}
 
-		return res.status(200).json({
-			page,
-			totalRecords: aggregations.count.id,
+		let response = {
+			totalRecords,
 			dataPerPage: payersPerPage,
-			totalPages: Math.ceil(aggregations.count.id / payersPerPage),
-			data,
-		});
+			totalPages,
+		};
+		// Inject data to response if exist
+		if (req.query.page) {
+			response.page = page;
+			response.data = data;
+		}
+		return res.status(200).json(response);
 	}
 
 	return res.status(400).json({ errors: ["Method not supported"] });
