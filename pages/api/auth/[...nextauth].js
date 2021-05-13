@@ -50,6 +50,7 @@ export default NextAuth({
 
 				return {
 					id: username,
+					name: user.displayname,
 				};
 			},
 		}),
