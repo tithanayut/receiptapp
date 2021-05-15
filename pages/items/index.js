@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
 import useSWR from "swr";
-import fetcher from "../utils/fetcher";
-import Pagination from "../components/Pagination/Pagination";
+import fetcher from "../../utils/fetcher";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Items = () => {
 	const router = useRouter();
