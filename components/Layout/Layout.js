@@ -6,7 +6,7 @@ const Layout = (props) => {
 			<header>
 				<NavBar />
 			</header>
-			<main>{props.children}</main>
+			<main className="text-gray-800">{props.children}</main>
 		</>
 	);
 };
