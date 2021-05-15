@@ -127,7 +127,13 @@ const Payers = () => {
 												{payer.notes}
 											</td>
 											<td className="w-1/6 text-center">
-												Edit ({payer.id})
+												<Link
+													href={"/payers/" + payer.id}
+												>
+													<span className="underline cursor-pointer">
+														Edit ({payer.id})
+													</span>
+												</Link>
 											</td>
 											<td className="w-1/6 text-center">
 												Select ({payer.id})
