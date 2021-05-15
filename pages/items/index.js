@@ -133,7 +133,13 @@ const Items = () => {
 													: "Not allow"}
 											</td>
 											<td className="w-1/6 text-center">
-												Edit ({item.id})
+												<Link
+													href={"/items/" + item.id}
+												>
+													<span className="underline cursor-pointer">
+														Edit ({item.id})
+													</span>
+												</Link>
 											</td>
 											<td className="w-1/6 text-center">
 												Select ({item.id})
