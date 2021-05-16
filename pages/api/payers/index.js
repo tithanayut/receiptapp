@@ -46,6 +46,34 @@ const handler = async (req, res) => {
 					},
 				});
 			}
+
+			if (req.query.search) {
+				const searchQuery = req.query.search;
+				data = await prisma.payer.findMany({
+					where: {
+						OR: [
+							{
+								id: {
+									startsWith: searchQuery,
+								},
+							},
+							{
+								name: {
+									contains: searchQuery,
+								},
+							},
+							{
+								notes: {
+									contains: searchQuery,
+								},
+							},
+						],
+					},
+					orderBy: {
+						id: "asc",
+					},
+				});
+			}
 		} catch {
 			return res
 				.status(500)
@@ -54,17 +82,23 @@ const handler = async (req, res) => {
 			await prisma.$disconnect();
 		}
 
-		let response = {
+		if (req.query.page) {
+			return res.status(200).json({
+				totalRecords,
+				dataPerPage: payersPerPage,
+				totalPages,
+				page,
+				data,
+			});
+		}
+		if (req.query.search) {
+			return res.status(200).json({ data });
+		}
+		return res.status(200).json({
 			totalRecords,
 			dataPerPage: payersPerPage,
 			totalPages,
-		};
-		// Inject data to response if exist
-		if (req.query.page) {
-			response.page = page;
-			response.data = data;
-		}
-		return res.status(200).json(response);
+		});
 	}
 
 	return res.status(405).json({ errors: ["Method not supported"] });
