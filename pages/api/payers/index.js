@@ -46,37 +46,6 @@ const handler = async (req, res) => {
 					},
 				});
 			}
-<<<<<<< HEAD
-
-			if (req.query.search) {
-				const searchQuery = req.query.search;
-				data = await prisma.payer.findMany({
-					where: {
-						OR: [
-							{
-								id: {
-									startsWith: searchQuery,
-								},
-							},
-							{
-								name: {
-									contains: searchQuery,
-								},
-							},
-							{
-								notes: {
-									contains: searchQuery,
-								},
-							},
-						],
-					},
-					orderBy: {
-						id: "asc",
-					},
-				});
-			}
-=======
->>>>>>> parent of add9845 (Implement search in payer API)
 		} catch {
 			return res
 				.status(500)

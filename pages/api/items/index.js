@@ -46,32 +46,6 @@ const handler = async (req, res) => {
 					},
 				});
 			}
-<<<<<<< HEAD
-
-			if (req.query.search) {
-				const searchQuery = req.query.search;
-				data = await prisma.item.findMany({
-					where: {
-						OR: [
-							{
-								id: {
-									startsWith: searchQuery,
-								},
-							},
-							{
-								name: {
-									contains: searchQuery,
-								},
-							},
-						],
-					},
-					orderBy: {
-						id: "asc",
-					},
-				});
-			}
-=======
->>>>>>> parent of 8a3b7b8 (Implement search in item API)
 		} catch {
 			return res
 				.status(500)
