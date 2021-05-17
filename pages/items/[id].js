@@ -2,8 +2,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
-import useSWR from "swr";
-import fetcher from "../../utils/fetcher";
+import useFetch from "../../utils/useFetch";
 
 const ItemsId = () => {
 	const router = useRouter();
@@ -14,7 +13,7 @@ const ItemsId = () => {
 	const itemAllowAdjustPriceField = useRef();
 
 	const id = router.query.id;
-	const { data, error } = useSWR("/api/items/" + id, fetcher);
+	const { data, error } = useFetch("/api/items/" + id);
 
 	const saveEditHandler = async (event) => {
 		event.preventDefault();

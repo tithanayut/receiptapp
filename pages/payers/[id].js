@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
-import useSWR from "swr";
+import useFetch from "../../utils/useFetch";
 import fetcher from "../../utils/fetcher";
 
 const PayersId = () => {
@@ -13,7 +13,7 @@ const PayersId = () => {
 	const payerNotesField = useRef();
 
 	const id = router.query.id;
-	const { data, error } = useSWR("/api/payers/" + id, fetcher);
+	const { data, error } = useFetch("/api/payers/" + id);
 
 	const saveEditHandler = async (event) => {
 		event.preventDefault();
