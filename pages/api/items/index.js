@@ -10,41 +10,72 @@ const handler = async (req, res) => {
 	}
 
 	if (req.method === "GET") {
+		// Validate page number if exists
+		let page;
+		if (req.query.page) {
+			page = Number(req.query.page);
+			if (!Number.isInteger(page)) {
+				return res
+					.status(400)
+					.json({ errors: ["Cannot parse page number"] });
+			}
+		}
+
+		// Query
+		const aggregationQuery = {
+			count: {
+				id: true,
+			},
+		};
+		const dataQuery = {
+			skip: (page - 1) * itemsPerPage,
+			take: itemsPerPage,
+			orderBy: {
+				id: "asc",
+			},
+		};
+
+		// Set conditions to query if search query submitted
+		if (req.query.search) {
+			const searchQuery = req.query.search;
+			const searchConditions = {
+				OR: [
+					{
+						id: {
+							startsWith: searchQuery,
+						},
+					},
+					{
+						name: {
+							contains: searchQuery,
+						},
+					},
+				],
+			};
+
+			aggregationQuery.where = searchConditions;
+			dataQuery.where = searchConditions;
+		}
+
 		const prisma = new PrismaClient();
 		let data, aggregations;
-		let page, totalRecords, totalPages;
+		let totalRecords, totalPages;
 		try {
-			aggregations = await prisma.item.aggregate({
-				count: {
-					id: true,
-				},
-			});
+			aggregations = await prisma.item.aggregate(aggregationQuery);
 
 			totalRecords = aggregations.count.id;
 			totalPages = Math.ceil(aggregations.count.id / itemsPerPage);
 
 			// Query page data if page number exists
 			if (req.query.page) {
-				page = Number(req.query.page);
 				// Validate page number
-				if (!Number.isInteger(page)) {
-					return res
-						.status(400)
-						.json({ errors: ["Cannot parse page number"] });
-				}
 				if (page < 1 || page > totalPages) {
 					return res
 						.status(400)
 						.json({ errors: ["Page does not exist"] });
 				}
 
-				data = await prisma.item.findMany({
-					skip: (page - 1) * itemsPerPage,
-					take: itemsPerPage,
-					orderBy: {
-						id: "asc",
-					},
-				});
+				data = await prisma.item.findMany(dataQuery);
 			}
 		} catch {
 			return res
