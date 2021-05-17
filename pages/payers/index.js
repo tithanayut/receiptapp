@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
@@ -11,20 +11,39 @@ const Payers = () => {
 	const [session, sessionLoading] = useSession();
 	const [page, setPage] = useState(1);
 
+	const searchQueryField = useRef();
+	const [searchQuery, setSearchQuery] = useState("");
+	const paginationURL = searchQuery
+		? `/api/payers?search=${encodeURIComponent(searchQuery)}`
+		: "/api/payers";
+	const dataURL = searchQuery
+		? `/api/payers?search=${encodeURIComponent(
+				searchQuery
+		  )}&page=${page.toString()}`
+		: `/api/payers?page=${page.toString()}`;
+
 	const { data: paginationData, error: paginationError } = useSWR(
-		"/api/payers",
+		paginationURL,
 		fetcher
 	);
-	const { data: pageData, error: pageError } = useSWR(
-		"/api/payers?page=" + page,
-		fetcher
-	);
+	const { data: pageData, error: pageError } = useSWR(dataURL, fetcher);
 
 	// Authentication
 	if (sessionLoading) return null;
 	if (!sessionLoading && !session) {
 		router.replace("/login");
 	}
+
+	const searchHandler = (event) => {
+		event.preventDefault();
+		setPage(1);
+		setSearchQuery(searchQueryField.current.value);
+	};
+	const clearSearchQueryHandler = () => {
+		setPage(1);
+		searchQueryField.current.value = "";
+		setSearchQuery("");
+	};
 
 	// TODO: Handle Error
 	if (paginationError || pageError) return <div>failed to load</div>;
@@ -76,11 +95,16 @@ const Payers = () => {
 					</p>
 				</Link>
 			</div>
-			<form className="flex items-center mt-6">
+			<form className="flex items-center mt-6" onSubmit={searchHandler}>
 				<label className="font-bold" htmlFor="search">
 					Search
 				</label>
-				<input className="textfield-box w-48" type="text" id="search" />
+				<input
+					className="textfield-box w-48"
+					type="text"
+					id="search"
+					ref={searchQueryField}
+				/>
 				<button className="btn" type="submit">
 					<svg
 						className="w-5 h-5"
@@ -98,9 +122,35 @@ const Payers = () => {
 					</svg>
 				</button>
 			</form>
+			{searchQuery && (
+				<p className="flex items-center mt-5">
+					<span className="text-theme-main font-bold">
+						Showing results with search query '{searchQuery}'
+					</span>{" "}
+					<span
+						className="text-red-600 underline cursor-pointer"
+						onClick={clearSearchQueryHandler}
+					>
+						<svg
+							className="w-6 h-6 ml-2"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+					</span>
+				</p>
+			)}
 			{!paginationData || !pageData ? (
 				<div className="loader"></div>
-			) : (
+			) : pageData.data ? (
 				<>
 					<div className="flex justify-center mt-6">
 						<table className="w-5/6">
@@ -156,6 +206,12 @@ const Payers = () => {
 						/>
 					</div>
 				</>
+			) : (
+				<div className="flex justify-center mt-6">
+					<p className="alert-error w-1/2">
+						<span className="font-bold mr-2">No record found</span>
+					</p>
+				</div>
 			)}
 		</div>
 	);
