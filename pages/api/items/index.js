@@ -48,7 +48,6 @@ const handler = async (req, res) => {
 			}
 <<<<<<< HEAD
 
-			// Query with search params if exists
 			if (req.query.search) {
 				const searchQuery = req.query.search;
 				data = await prisma.item.findMany({
