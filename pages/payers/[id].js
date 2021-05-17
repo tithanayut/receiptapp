@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
 import useFetch from "../../utils/useFetch";
-import fetcher from "../../utils/fetcher";
 
 const PayersId = () => {
 	const router = useRouter();
