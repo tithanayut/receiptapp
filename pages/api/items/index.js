@@ -46,6 +46,7 @@ const handler = async (req, res) => {
 					},
 				});
 			}
+<<<<<<< HEAD
 
 			// Query with search params if exists
 			if (req.query.search) {
@@ -70,6 +71,8 @@ const handler = async (req, res) => {
 					},
 				});
 			}
+=======
+>>>>>>> parent of 8a3b7b8 (Implement search in item API)
 		} catch {
 			return res
 				.status(500)
@@ -78,23 +81,17 @@ const handler = async (req, res) => {
 			await prisma.$disconnect();
 		}
 
-		if (req.query.page) {
-			return res.status(200).json({
-				totalRecords,
-				dataPerPage: itemsPerPage,
-				totalPages,
-				page,
-				data,
-			});
-		}
-		if (req.query.search) {
-			return res.status(200).json({ data });
-		}
-		return res.status(200).json({
+		let response = {
 			totalRecords,
 			dataPerPage: itemsPerPage,
 			totalPages,
-		});
+		};
+		// Inject data to response if exist
+		if (req.query.page) {
+			response.page = page;
+			response.data = data;
+		}
+		return res.status(200).json(response);
 	}
 
 	return res.status(405).json({ errors: ["Method not supported"] });
