@@ -178,7 +178,10 @@ const Payers = () => {
 											</td>
 											<td className="w-1/6 text-center">
 												<Link
-													href={"/payers/" + payer.id}
+													href={
+														"/payers/edit/" +
+														payer.id
+													}
 												>
 													<span className="underline cursor-pointer">
 														Edit ({payer.id})

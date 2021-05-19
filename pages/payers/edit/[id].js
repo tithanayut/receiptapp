@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
-import useFetch from "../../utils/useFetch";
+import useFetch from "../../../utils/useFetch";
 
 const PayersId = () => {
 	const router = useRouter();

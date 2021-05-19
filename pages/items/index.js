@@ -184,7 +184,9 @@ const Items = () => {
 											</td>
 											<td className="w-1/6 text-center">
 												<Link
-													href={"/items/" + item.id}
+													href={
+														"/items/edit/" + item.id
+													}
 												>
 													<span className="underline cursor-pointer">
 														Edit ({item.id})
