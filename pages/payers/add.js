@@ -14,7 +14,7 @@ const PayersAdd = () => {
 	const addPayerHandler = async (event) => {
 		event.preventDefault();
 
-		const res = await fetch("/api/payers/" + id, {
+		const res = await fetch("/api/payers/", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({

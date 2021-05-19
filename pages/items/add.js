@@ -18,7 +18,7 @@ const ItemsAdd = () => {
 		const allowAdjustPrice =
 			itemAllowAdjustPriceField.current.value === "Yes" ? true : false;
 
-		const res = await fetch("/api/items/" + id, {
+		const res = await fetch("/api/items/", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
