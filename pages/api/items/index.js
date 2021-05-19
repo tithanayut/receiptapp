@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { getSession } from "next-auth/client";
 import { itemsPerPage } from "../../../config";
 
@@ -96,6 +96,45 @@ const handler = async (req, res) => {
 			response.data = data;
 		}
 		return res.status(200).json(response);
+	} else if (req.method === "POST") {
+		if (
+			!req.body.id ||
+			!req.body.name ||
+			typeof req.body.price !== "number" ||
+			typeof req.body.allowAdjustPrice === "undefined"
+		) {
+			return res
+				.status(400)
+				.json({ errros: ["Request body not complete or is invalid"] });
+		}
+
+		const prisma = new PrismaClient();
+		let data;
+		try {
+			data = await prisma.item.create({
+				data: {
+					id: req.body.id,
+					name: req.body.name,
+					price: req.body.price,
+					allowAjustPrice: req.body.allowAdjustPrice,
+				},
+			});
+		} catch (err) {
+			if (err instanceof Prisma.PrismaClientKnownRequestError) {
+				if (err.code === "P2002") {
+					return res.status(409).json({
+						errors: ["Item with this ID already exists."],
+					});
+				}
+			}
+			return res
+				.status(500)
+				.json({ errors: ["Database connection failed"] });
+		} finally {
+			await prisma.$disconnect();
+		}
+
+		return res.status(201).json({ message: "Created", data });
 	}
 
 	return res.status(405).json({ errors: ["Method not supported"] });
