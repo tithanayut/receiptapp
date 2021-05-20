@@ -84,6 +84,7 @@ const ItemsAdd = () => {
 						type="text"
 						id="itemId"
 						ref={itemIdField}
+						required
 					/>
 				</div>
 				<div className="my-1">
@@ -98,6 +99,7 @@ const ItemsAdd = () => {
 						type="text"
 						id="itemName"
 						ref={itemNameField}
+						required
 					/>
 				</div>
 				<div className="my-1">
@@ -111,7 +113,10 @@ const ItemsAdd = () => {
 						className="textfield-box w-36"
 						type="number"
 						id="itemPrice"
+						min="0"
+						step=".01"
 						ref={itemPriceField}
+						required
 					/>
 				</div>
 				<div className="my-1">

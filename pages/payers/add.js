@@ -79,6 +79,7 @@ const PayersAdd = () => {
 						type="text"
 						id="payerId"
 						ref={payerIdField}
+						required
 					/>
 				</div>
 				<div className="my-1">
@@ -93,6 +94,7 @@ const PayersAdd = () => {
 						type="text"
 						id="payerName"
 						ref={payerNameField}
+						required
 					/>
 				</div>
 				<div className="my-1">
