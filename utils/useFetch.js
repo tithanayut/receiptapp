@@ -13,7 +13,7 @@ const useFetch = (url) => {
 		} else {
 			setData(json);
 		}
-	});
+	}, [url]);
 
 	return { data, error };
 };
