@@ -105,7 +105,7 @@ const handler = async (req, res) => {
 		) {
 			return res
 				.status(400)
-				.json({ errros: ["Request body not complete or is invalid"] });
+				.json({ errors: ["Request body not complete or is invalid"] });
 		}
 
 		const prisma = new PrismaClient();
