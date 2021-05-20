@@ -125,7 +125,8 @@ const Items = () => {
 			{searchQuery && (
 				<p className="flex items-center mt-5">
 					<span className="text-theme-main font-bold">
-						Showing results with search query '{searchQuery}'
+						Showing results with search query &quot;{searchQuery}
+						&quot;
 					</span>{" "}
 					<span
 						className="text-red-600 underline cursor-pointer"
