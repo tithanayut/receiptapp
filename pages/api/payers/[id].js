@@ -32,7 +32,7 @@ const handler = async (req, res) => {
 		}
 		return res.status(200).json(data);
 	} else if (req.method === "PUT") {
-		if (!req.body.name || !req.body.notes) {
+		if (!req.body.name) {
 			return res
 				.status(400)
 				.json({ errors: ["Request body not complete"] });
