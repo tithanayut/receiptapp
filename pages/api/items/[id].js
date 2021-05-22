@@ -20,9 +20,7 @@ const handler = async (req, res) => {
 				},
 			});
 		} catch {
-			return res
-				.status(500)
-				.json({ errors: ["Database connection failed"] });
+			return res.status(500).json({ errors: ["Database connection failed"] });
 		} finally {
 			await prisma.$disconnect();
 		}
@@ -56,9 +54,7 @@ const handler = async (req, res) => {
 				},
 			});
 		} catch {
-			return res
-				.status(500)
-				.json({ errors: ["Database connection failed"] });
+			return res.status(500).json({ errors: ["Database connection failed"] });
 		} finally {
 			await prisma.$disconnect();
 		}

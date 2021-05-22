@@ -15,9 +15,7 @@ const handler = async (req, res) => {
 		if (req.query.page) {
 			page = Number(req.query.page);
 			if (!Number.isInteger(page)) {
-				return res
-					.status(400)
-					.json({ errors: ["Cannot parse page number"] });
+				return res.status(400).json({ errors: ["Cannot parse page number"] });
 			}
 		}
 
@@ -70,17 +68,13 @@ const handler = async (req, res) => {
 			if (req.query.page) {
 				// Validate page number
 				if (page < 1 || page > totalPages) {
-					return res
-						.status(400)
-						.json({ errors: ["Page does not exist"] });
+					return res.status(400).json({ errors: ["Page does not exist"] });
 				}
 
 				data = await prisma.item.findMany(dataQuery);
 			}
 		} catch {
-			return res
-				.status(500)
-				.json({ errors: ["Database connection failed"] });
+			return res.status(500).json({ errors: ["Database connection failed"] });
 		} finally {
 			await prisma.$disconnect();
 		}
@@ -127,9 +121,7 @@ const handler = async (req, res) => {
 					});
 				}
 			}
-			return res
-				.status(500)
-				.json({ errors: ["Database connection failed"] });
+			return res.status(500).json({ errors: ["Database connection failed"] });
 		} finally {
 			await prisma.$disconnect();
 		}

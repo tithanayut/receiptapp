@@ -40,10 +40,7 @@ export default NextAuth({
 				}
 
 				// Compare password
-				const result = await validate(
-					credentials.password,
-					user.password
-				);
+				const result = await validate(credentials.password, user.password);
 				if (!result) {
 					throw new Error("Username or password incorrect");
 				}

@@ -168,30 +168,17 @@ const Payers = () => {
 								{pageData.data.map((payer) => {
 									return (
 										<tr key={payer.id}>
+											<td className="w-1/6 text-center">{payer.id}</td>
+											<td className="w-1/4">{payer.name}</td>
+											<td className="w-1/4 text-center">{payer.notes}</td>
 											<td className="w-1/6 text-center">
-												{payer.id}
-											</td>
-											<td className="w-1/4">
-												{payer.name}
-											</td>
-											<td className="w-1/4 text-center">
-												{payer.notes}
-											</td>
-											<td className="w-1/6 text-center">
-												<Link
-													href={
-														"/payers/edit/" +
-														payer.id
-													}
-												>
+												<Link href={"/payers/edit/" + payer.id}>
 													<span className="underline cursor-pointer">
 														Edit ({payer.id})
 													</span>
 												</Link>
 											</td>
-											<td className="w-1/6 text-center">
-												Select ({payer.id})
-											</td>
+											<td className="w-1/6 text-center">Select ({payer.id})</td>
 										</tr>
 									);
 								})}

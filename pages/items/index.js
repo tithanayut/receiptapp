@@ -169,34 +169,20 @@ const Items = () => {
 								{pageData.data.map((item) => {
 									return (
 										<tr key={item.id}>
-											<td className="w-1/6 text-center">
-												{item.id}
-											</td>
-											<td className="w-1/3">
-												{item.name}
-											</td>
+											<td className="w-1/6 text-center">{item.id}</td>
+											<td className="w-1/3">{item.name}</td>
+											<td className="w-1/12 text-center">{item.price}</td>
 											<td className="w-1/12 text-center">
-												{item.price}
-											</td>
-											<td className="w-1/12 text-center">
-												{item.allowAjustPrice
-													? "Allow"
-													: "Not allow"}
+												{item.allowAjustPrice ? "Allow" : "Not allow"}
 											</td>
 											<td className="w-1/6 text-center">
-												<Link
-													href={
-														"/items/edit/" + item.id
-													}
-												>
+												<Link href={"/items/edit/" + item.id}>
 													<span className="underline cursor-pointer">
 														Edit ({item.id})
 													</span>
 												</Link>
 											</td>
-											<td className="w-1/6 text-center">
-												Select ({item.id})
-											</td>
+											<td className="w-1/6 text-center">Select ({item.id})</td>
 										</tr>
 									);
 								})}

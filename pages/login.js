@@ -43,10 +43,7 @@ const Login = () => {
 				</div>
 			)}
 			<div className="flex justify-center mt-6">
-				<form
-					className="flex flex-col items-center"
-					onSubmit={loginHandler}
-				>
+				<form className="flex flex-col items-center" onSubmit={loginHandler}>
 					<div className="flex my-1">
 						<label className="font-bold" htmlFor="username">
 							Username:

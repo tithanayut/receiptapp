@@ -79,10 +79,7 @@ const ItemsId = () => {
 			) : (
 				<form className="flex flex-col mt-6" onSubmit={saveEditHandler}>
 					<div className="my-1">
-						<label
-							className="inline-block w-48 font-bold"
-							htmlFor="itemId"
-						>
+						<label className="inline-block w-48 font-bold" htmlFor="itemId">
 							Item ID
 						</label>
 						<input
@@ -94,10 +91,7 @@ const ItemsId = () => {
 						/>
 					</div>
 					<div className="my-1">
-						<label
-							className="inline-block w-48 font-bold"
-							htmlFor="itemName"
-						>
+						<label className="inline-block w-48 font-bold" htmlFor="itemName">
 							Name
 						</label>
 						<input
@@ -109,10 +103,7 @@ const ItemsId = () => {
 						/>
 					</div>
 					<div className="my-1">
-						<label
-							className="inline-block w-48 font-bold"
-							htmlFor="itemPrice"
-						>
+						<label className="inline-block w-48 font-bold" htmlFor="itemPrice">
 							Price
 						</label>
 						<input

@@ -68,10 +68,7 @@ const PayersAdd = () => {
 
 			<form className="flex flex-col mt-6" onSubmit={addPayerHandler}>
 				<div className="my-1">
-					<label
-						className="inline-block w-20 font-bold"
-						htmlFor="payerId"
-					>
+					<label className="inline-block w-20 font-bold" htmlFor="payerId">
 						Payer ID
 					</label>
 					<input
@@ -83,10 +80,7 @@ const PayersAdd = () => {
 					/>
 				</div>
 				<div className="my-1">
-					<label
-						className="inline-block w-20 font-bold"
-						htmlFor="payerName"
-					>
+					<label className="inline-block w-20 font-bold" htmlFor="payerName">
 						Name
 					</label>
 					<input
@@ -98,10 +92,7 @@ const PayersAdd = () => {
 					/>
 				</div>
 				<div className="my-1">
-					<label
-						className="inline-block w-20 font-bold"
-						htmlFor="payerNotes"
-					>
+					<label className="inline-block w-20 font-bold" htmlFor="payerNotes">
 						Notes
 					</label>
 					<input
