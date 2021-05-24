@@ -26,10 +26,8 @@ export default NextAuth({
 							username,
 						},
 					});
-				} catch {
-					return res
-						.status(500)
-						.json({ errors: ["Database connection failed"] });
+				} catch (err) {
+					throw new Error("Database connection failed" + err);
 				} finally {
 					await prisma.$disconnect();
 				}
@@ -37,6 +35,11 @@ export default NextAuth({
 				// Check if user exists
 				if (!user) {
 					throw new Error("Username or password incorrect");
+				}
+
+				// Check if user is active
+				if (!user.isactive) {
+					throw new Error("This user has been disabled");
 				}
 
 				// Compare password
