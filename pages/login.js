@@ -45,7 +45,7 @@ const Login = () => {
 			<div className="flex justify-center mt-6">
 				<form className="flex flex-col items-center" onSubmit={loginHandler}>
 					<div className="flex my-1">
-						<label className="font-bold" htmlFor="username">
+						<label className="font-bold w-20" htmlFor="username">
 							Username:
 						</label>
 						<input
@@ -56,7 +56,7 @@ const Login = () => {
 						/>
 					</div>
 					<div className="flex my-1">
-						<label className="font-bold" htmlFor="password">
+						<label className="font-bold w-20" htmlFor="password">
 							Password:
 						</label>
 						<input
