@@ -77,6 +77,7 @@ const PayersAdd = () => {
 						id="payerId"
 						ref={payerIdField}
 						required
+						autoFocus
 					/>
 				</div>
 				<div className="my-1">

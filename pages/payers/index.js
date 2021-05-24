@@ -104,6 +104,7 @@ const Payers = () => {
 					type="text"
 					id="search"
 					ref={searchQueryField}
+					autoFocus
 				/>
 				<button className="btn" type="submit">
 					<svg

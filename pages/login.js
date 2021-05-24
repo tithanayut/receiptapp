@@ -53,6 +53,7 @@ const Login = () => {
 							type="text"
 							id="username"
 							ref={usernameField}
+							autoFocus
 						/>
 					</div>
 					<div className="flex my-1">

@@ -82,6 +82,7 @@ const ItemsAdd = () => {
 						id="itemId"
 						ref={itemIdField}
 						required
+						autoFocus
 					/>
 				</div>
 				<div className="my-1">
