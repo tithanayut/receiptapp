@@ -48,6 +48,12 @@ const handler = async (req, res) => {
 					},
 					include: {
 						Payer: true,
+						AppUser: {
+							select: {
+								username: true,
+								displayname: true,
+							},
+						},
 					},
 				});
 			}
@@ -69,31 +75,77 @@ const handler = async (req, res) => {
 		}
 		return res.status(200).json(response);
 	} else if (req.method === "POST") {
-		if (!req.body.payerId) {
-			return res.status(400).json({ errors: ["Request body not complete"] });
+		if (!req.body.payerId || typeof req.body.items !== "object") {
+			return res
+				.status(400)
+				.json({ errors: ["Request body not complete or is invalid"] });
 		}
+
+		const insertQuery = {
+			data: {
+				Payer: {
+					connect: {
+						id: req.body.payerId,
+					},
+				},
+				AppUser: {
+					connect: {
+						username: token.sub,
+					},
+				},
+			},
+			include: {
+				PaymentDetail: {
+					select: {
+						index: true,
+						itemId: true,
+						price: true,
+					},
+				},
+			},
+		};
+
+		// Transform item IDs to records
+		if (!Array.isArray(req.body.items)) {
+			return res.status(400).json({
+				errors: ["Request body invalid", "Item must be in an array"],
+			});
+		}
+		if (req.body.items.length > 0) {
+			const details = [];
+			let count = 0;
+			for (const item of req.body.items) {
+				if (!item.id || typeof item.price !== "number") {
+					return res.status(400).json({
+						errors: [
+							"Request body not complete or is invalid",
+							"Invalid or missing item ID or price",
+						],
+					});
+				}
+
+				details.unshift({
+					index: count,
+					Item: { connect: { id: item.id } },
+					price: item.price,
+				});
+				count++;
+			}
+
+			insertQuery.data.PaymentDetail = {
+				create: details,
+			};
+		}
+
 		const prisma = new PrismaClient();
 		let data;
 		try {
-			data = await prisma.payment.create({
-				data: {
-					Payer: {
-						connect: {
-							id: req.body.payerId,
-						},
-					},
-					AppUser: {
-						connect: {
-							username: token.sub,
-						},
-					},
-				},
-			});
+			data = await prisma.payment.create(insertQuery);
 		} catch (err) {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
 				if (err.code === "P2025") {
 					return res.status(409).json({
-						errors: ["Payer with this ID does not exist."],
+						errors: ["Payer or item with some ID does not exist."],
 					});
 				}
 			}

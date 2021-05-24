@@ -30,6 +30,13 @@ const handler = async (req, res) => {
 							displayname: true,
 						},
 					},
+					PaymentDetail: {
+						select: {
+							index: true,
+							itemId: true,
+							price: true,
+						},
+					},
 				},
 			});
 		} catch {
