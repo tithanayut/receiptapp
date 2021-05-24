@@ -26,8 +26,8 @@ export default NextAuth({
 							username,
 						},
 					});
-				} catch (err) {
-					throw new Error("Database connection failed" + err);
+				} catch {
+					throw new Error("Database connection failed");
 				} finally {
 					await prisma.$disconnect();
 				}
