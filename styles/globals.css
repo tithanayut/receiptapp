@@ -19,6 +19,10 @@ td {
 	@apply flex justify-center items-center px-4 h-9 bg-theme-main text-theme-opposite rounded-md cursor-pointer hover:opacity-90 hover:shadow-sm;
 }
 
+.btn-no-bg {
+	@apply flex justify-center items-center px-4 h-9 text-theme-opposite rounded-md cursor-pointer hover:opacity-90 hover:shadow-sm;
+}
+
 .textfield {
 	@apply h-8 mx-3 border-b-2 outline-none border-gray-400;
 }
