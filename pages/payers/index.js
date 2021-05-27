@@ -1,15 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
+import { AppContext } from "../../store/context";
 import Pagination from "../../components/Pagination/Pagination";
 
 const Payers = () => {
 	const router = useRouter();
 	const [session, sessionLoading] = useSession();
 	const [page, setPage] = useState(1);
+
+	const context = useContext(AppContext);
 
 	const searchQueryField = useRef();
 	const [searchQuery, setSearchQuery] = useState("");
@@ -179,7 +182,15 @@ const Payers = () => {
 													</span>
 												</Link>
 											</td>
-											<td className="w-1/6 text-center">Select ({payer.id})</td>
+											<td
+												className="w-1/6 text-center underline cursor-pointer"
+												onClick={() => {
+													context.setPayer(payer.id);
+													router.push("/payments/add");
+												}}
+											>
+												Select ({payer.id})
+											</td>
 										</tr>
 									);
 								})}
