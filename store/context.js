@@ -3,10 +3,10 @@ import { useState, createContext } from "react";
 export const AppContext = createContext({
 	payer: null,
 	items: [],
-	setPayer: () => {},
-	addItem: () => {},
+	setPayer: async () => {},
+	addItem: async () => {},
 	setItemPrice: () => {},
-	createPayment: () => {},
+	createPayment: async () => {},
 	clear: () => {},
 });
 
@@ -45,7 +45,7 @@ const AppContextProvider = (props) => {
 		return true;
 	};
 
-	const setItemPrice = async (itemIndex, price) => {
+	const setItemPrice = (itemIndex, price) => {
 		let result = false;
 
 		const updatedItems = items.map((item, index) => {
