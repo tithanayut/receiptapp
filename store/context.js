@@ -1,34 +1,44 @@
 import { useState, createContext } from "react";
 
 export const AppContext = createContext({
-	payerId: null,
-	itemIds: [],
+	payer: null,
+	items: [],
 	addItem: () => {},
 	setPayer: () => {},
 	clear: () => {},
 });
 
 const AppContextProvider = (props) => {
-	const [payerId, setPayerId] = useState(null);
-	const [itemIds, setItemIds] = useState([]);
+	const [payerInfo, setPayerInfo] = useState(null);
+	const [items, setItems] = useState([]);
 
 	const addItem = (itemId, price) => {
-		const newItemIds = itemIds.slice();
-		newItemIds.push({ id: itemId, price });
-		setItemIds(newItemIds);
+		const newItems = items.slice();
+		newItems.push({ id: itemId, price });
+		setItems(newItems);
 	};
 
-	const setPayer = (payerId) => {
-		setPayerId(payerId);
+	const setPayer = async (payerId) => {
+		const res = await fetch("/api/payers/" + encodeURIComponent(payerId));
+		const data = await res.json();
+
+		if (data.errors || !data.id) {
+			setPayerInfo(null);
+			return false;
+		}
+		setPayerInfo(data);
+		return true;
 	};
 
 	const clear = () => {
-		setPayerId(null);
-		setItemIds([]);
+		setPayerInfo(null);
+		setItems([]);
 	};
 
 	return (
-		<AppContext.Provider value={{ payerId, itemIds, addItem, setPayer, clear }}>
+		<AppContext.Provider
+			value={{ payer: payerInfo, items, addItem, setPayer, clear }}
+		>
 			{props.children}
 		</AppContext.Provider>
 	);
