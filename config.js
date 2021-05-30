@@ -7,5 +7,5 @@ export const receiptConfig = {
 	orgName: "Test Organization",
 	orgAddress: "•/••• Example Rd., Satit Province, Thailand",
 	orgContact: "Tel. ••-•••-•••• | Fax. ••-•••-••••",
-	orgLogoURL: "/favicon.svg",
+	orgLogoURL: "logo.gif",
 };
