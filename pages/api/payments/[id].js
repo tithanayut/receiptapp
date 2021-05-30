@@ -35,6 +35,12 @@ const handler = async (req, res) => {
 							index: true,
 							itemId: true,
 							price: true,
+							Item: {
+								select: {
+									id: true,
+									name: true,
+								},
+							},
 						},
 					},
 				},
