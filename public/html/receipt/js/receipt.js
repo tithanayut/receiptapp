@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 		paymentDate.getFullYear();
 
 	// Fill fields
-	document.getElementById("paymentId").textContent = payment.id;
+	document.getElementById("paymentId").textContent =
+		config.paymentIdPrefix + payment.id;
 	document.getElementById("payerId").textContent = payment.Payer.id;
 	document.getElementById("payerName").textContent = payment.Payer.name;
 	document.getElementById("payerNotes").textContent = payment.Payer.notes;
