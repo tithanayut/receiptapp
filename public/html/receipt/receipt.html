@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Receiptapp</title>
+		<link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+		<link rel="stylesheet" href="css/paper.css" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body class="A5 landscape">
+		<section class="sheet padding-10mm">
+			<div class="header">
+				<div class="header-logo">
+					<img src="logo.gif" />
+				</div>
+				<div class="header-org">
+					<h1 id="orgName"></h1>
+					<h2 id="orgAddress"></h2>
+					<h3 id="orgContact"></h3>
+				</div>
+				<div class="header-doctitle">
+					<p>RECEIPT</p>
+				</div>
+			</div>
+			<div class="payerinfo">
+				<p>
+					<span style="display: inline-block; min-width: 7cm">
+						<span class="label">Payment ID:</span>
+						<span id="paymentId"></span>
+					</span>
+					<span>
+						<span class="label">Date:</span>
+						<span id="paymentDate"></span>
+					</span>
+				</p>
+				<p>
+					<span style="display: inline-block; min-width: 6.5cm">
+						<span class="label">Payer ID:</span>
+						<span id="payerId"></span>
+					</span>
+					<span>
+						<span class="label">Name:</span>
+						<span id="payerName"></span>
+					</span>
+				</p>
+				<p>
+					<span>
+						<span class="label">Notes:</span>
+						<span id="payerNotes"></span>
+					</span>
+				</p>
+			</div>
+			<div class="paymentinfo">
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 20%">Item ID</th>
+							<th style="width: 55%">Name</th>
+							<th style="width: 25%">Price</th>
+						</tr>
+					</thead>
+					<tbody id="payment-details"></tbody>
+				</table>
+				<p id="payment-error"></p>
+			</div>
+			<div class="footer">
+				<p>Issued by..............................................Cashier</p>
+				<p id="appUserDisplayname"></p>
+			</div>
+		</section>
+
+		<script src="js/receipt.js"></script>
+	</body>
+</html>

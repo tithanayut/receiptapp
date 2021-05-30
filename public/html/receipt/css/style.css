@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap");
+
+@page {
+	size: A5 landscape;
+}
+
+body {
+	font-family: "Sarabun", sans-serif;
+}
+
+p {
+	margin: 0;
+	font-size: 10pt;
+	line-height: 14pt;
+}
+
+h1 {
+	margin: 0;
+	font-size: 12pt;
+	line-height: 18pt;
+}
+h2,
+h3 {
+	margin: 0;
+	font-size: 10pt;
+	line-height: 14pt;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.header-org {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.header-logo img {
+	width: 1.4cm;
+}
+.header-doctitle p {
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: center;
+	padding: 2mm 5mm;
+	background-color: #ddd;
+}
+
+.payerinfo {
+	box-sizing: border-box;
+	width: 100%;
+	border: 1px solid black;
+	margin-top: 3mm;
+	padding: 2mm;
+}
+.payerinfo .label {
+	font-weight: bold;
+	margin-right: 2mm;
+}
+
+.paymentinfo {
+	margin: 2mm 0;
+}
+.paymentinfo table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: "Sarabun", sans-serif;
+	font-size: 10pt;
+	line-height: 14pt;
+}
+.paymentinfo tr,
+.paymentinfo th,
+.paymentinfo td {
+	border: 1px solid black;
+	padding: 1mm;
+}
+.paymentinfo .itemId,
+.paymentinfo .itemPrice,
+#payment-error {
+	text-align: center;
+}
+
+.footer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-top: 5mm;
+}
+#appUserDisplayname {
+	display: inline-block;
+	width: 5cm;
+}
