@@ -16,7 +16,7 @@ const handler = async (req, res) => {
 
 	if (req.method === "GET") {
 		const prisma = new PrismaClient();
-		let data;
+		let data, total;
 		try {
 			data = await prisma.payment.findUnique({
 				where: {
@@ -45,6 +45,14 @@ const handler = async (req, res) => {
 					},
 				},
 			});
+			total = await prisma.paymentDetail.aggregate({
+				where: {
+					paymentId: id,
+				},
+				sum: {
+					price: true,
+				},
+			});
 		} catch {
 			return res.status(500).json({ errors: ["Database connection failed"] });
 		} finally {
@@ -54,7 +62,7 @@ const handler = async (req, res) => {
 		if (!data) {
 			return res.status(404).json({ errors: ["Payment not found"] });
 		}
-		return res.status(200).json(data);
+		return res.status(200).json({ ...data, ...total });
 	}
 
 	return res.status(405).json({ errors: ["Method not supported"] });
