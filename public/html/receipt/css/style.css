@@ -69,6 +69,9 @@ h3 {
 	font-size: 10pt;
 	line-height: 14pt;
 }
+.paymentinfo thead {
+	background-color: #ddd;
+}
 .paymentinfo tr,
 .paymentinfo th,
 .paymentinfo td {
@@ -80,6 +83,16 @@ h3 {
 #payment-error {
 	text-align: center;
 }
+#payment-total {
+	text-align: center;
+	font-weight: bold;
+	background-color: #eee;
+}
+#payment-total-label {
+	text-align: right;
+	font-weight: bold;
+	background-color: #ddd;
+}
 
 .footer {
 	display: flex;
@@ -89,5 +102,6 @@ h3 {
 }
 #appUserDisplayname {
 	display: inline-block;
-	width: 5cm;
+	width: 6.5cm;
+	text-align: center;
 }
