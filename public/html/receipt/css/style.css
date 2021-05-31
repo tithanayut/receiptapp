@@ -73,7 +73,7 @@ h3 {
 .paymentinfo th,
 .paymentinfo td {
 	border: 1px solid black;
-	padding: 1mm;
+	padding: 0.8mm;
 }
 .paymentinfo .itemId,
 .paymentinfo .itemPrice,
