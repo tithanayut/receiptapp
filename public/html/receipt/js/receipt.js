@@ -55,4 +55,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 		row.innerHTML = `<td class="itemId">${item.Item.id}</td><td>${item.Item.name}</td><td class="itemPrice">${item.price}</td>`;
 		document.getElementById("payment-details").appendChild(row);
 	});
+
+	// Fill total amt.
+	const row = document.createElement("tr");
+	row.innerHTML = `<td colspan="2" style="text-align:right">Total Amount</td><td style="text-align:center">${payment.sum.price.toFixed(
+		2
+	)}</td>`;
+	document.getElementById("payment-details").appendChild(row);
 });
