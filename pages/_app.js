@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { Provider } from "next-auth/client";
+import { ToastProvider } from "react-toast-notifications";
 import AppContextProvider from "../store/context";
 import Layout from "../components/Layout/Layout";
 import "../styles/globals.css";
@@ -11,11 +12,13 @@ function App({ Component, pageProps }) {
 				<title>Receiptapp</title>
 				<link rel="icon" href="/favicon.svg" />
 			</Head>
-			<AppContextProvider>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</AppContextProvider>
+			<ToastProvider placement="top-center">
+				<AppContextProvider>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</AppContextProvider>
+			</ToastProvider>
 		</Provider>
 	);
 }

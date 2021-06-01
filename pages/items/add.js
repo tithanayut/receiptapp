@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
+import { useToasts } from "react-toast-notifications";
 
 const ItemsAdd = () => {
 	const router = useRouter();
@@ -11,6 +12,8 @@ const ItemsAdd = () => {
 	const itemNameField = useRef();
 	const itemPriceField = useRef();
 	const itemAllowAdjustPriceField = useRef();
+
+	const { addToast } = useToasts();
 
 	const addItemHandler = async (event) => {
 		event.preventDefault();
@@ -30,10 +33,14 @@ const ItemsAdd = () => {
 		});
 		const data = await res.json();
 
-		if (!data.errors) {
-			router.push("/items");
+		if (data.errors) {
+			addToast(data.errors.join(", "), {
+				appearance: "error",
+				autoDismiss: true,
+			});
+			return;
 		}
-		// TODO: Handle Error
+		router.push("/items");
 	};
 
 	// Authentication

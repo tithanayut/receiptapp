@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
+import { useToasts } from "react-toast-notifications";
 
 const PayersAdd = () => {
 	const router = useRouter();
@@ -10,6 +11,8 @@ const PayersAdd = () => {
 	const payerIdField = useRef();
 	const payerNameField = useRef();
 	const payerNotesField = useRef();
+
+	const { addToast } = useToasts();
 
 	const addPayerHandler = async (event) => {
 		event.preventDefault();
@@ -25,10 +28,14 @@ const PayersAdd = () => {
 		});
 		const data = await res.json();
 
-		if (!data.errors) {
-			router.push("/payers");
+		if (data.errors) {
+			addToast(data.errors.join(", "), {
+				appearance: "error",
+				autoDismiss: true,
+			});
+			return;
 		}
-		// TODO: Handle Error
+		router.push("/payers");
 	};
 
 	// Authentication
