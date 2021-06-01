@@ -20,7 +20,10 @@ const AppContextProvider = (props) => {
 
 		if (data.errors || !data.id) {
 			setPayerInfo(null);
-			return { result: false, errors: data.errors };
+			return {
+				result: false,
+				errors: data.errors || ["Unable to set this Payer ID"],
+			};
 		}
 		setPayerInfo(data);
 		return { result: true };
@@ -31,7 +34,10 @@ const AppContextProvider = (props) => {
 		const data = await res.json();
 
 		if (data.errors || !data.id) {
-			return { result: false, errors: data.errors };
+			return {
+				result: false,
+				errors: data.errors || ["Unable to add this item"],
+			};
 		}
 
 		const updatedItems = items.slice();
