@@ -110,6 +110,8 @@ const ItemsId = () => {
 							className="textfield-box w-36"
 							type="number"
 							id="itemPrice"
+							min="0"
+							step=".01"
 							defaultValue={data.price}
 							ref={itemPriceField}
 						/>
