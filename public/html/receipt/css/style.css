@@ -37,6 +37,8 @@ h3 {
 	line-height: 14pt;
 }
 
+.label {
+	font-weight: bold;
 	margin-right: 2mm;
 }
 
