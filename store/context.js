@@ -20,10 +20,10 @@ const AppContextProvider = (props) => {
 
 		if (data.errors || !data.id) {
 			setPayerInfo(null);
-			return false;
+			return { result: false, errors: data.errors };
 		}
 		setPayerInfo(data);
-		return true;
+		return { result: true };
 	};
 
 	const addItem = async (itemId) => {
@@ -31,7 +31,7 @@ const AppContextProvider = (props) => {
 		const data = await res.json();
 
 		if (data.errors || !data.id) {
-			return false;
+			return { result: false, errors: data.errors };
 		}
 
 		const updatedItems = items.slice();
@@ -42,16 +42,16 @@ const AppContextProvider = (props) => {
 			allowAdjustPrice: data.allowAjustPrice,
 		});
 		setItems(updatedItems);
-		return true;
+		return { result: true };
 	};
 
 	const setItemPrice = (itemIndex, price) => {
-		let result = false;
+		let result = { result: false, errors: ["Cannot update item price."] };
 
 		const updatedItems = items.map((item, index) => {
 			if (index === itemIndex) {
 				if (item.allowAdjustPrice) {
-					result = true;
+					result.result = true;
 					return {
 						...item,
 						price: parseFloat(price),
@@ -67,6 +67,13 @@ const AppContextProvider = (props) => {
 	};
 
 	const createPayment = async () => {
+		if (!payerInfo || items.length === 0) {
+			return {
+				result: false,
+				errors: ["Form not completed. Please add both payer and item data."],
+			};
+		}
+
 		const res = await fetch("/api/payments", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -75,10 +82,10 @@ const AppContextProvider = (props) => {
 		const data = await res.json();
 
 		if (data.errors) {
-			return false;
+			return { result: false, errors: data.errors };
 		} else {
 			clear();
-			return true;
+			return { result: true };
 		}
 	};
 
