@@ -2,6 +2,7 @@ import { useRef, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/client";
+import { useToasts } from "react-toast-notifications";
 import { AppContext } from "../../store/context";
 
 const PaymentsAdd = () => {
@@ -12,6 +13,8 @@ const PaymentsAdd = () => {
 
 	const payerIdField = useRef();
 	const itemIdField = useRef();
+
+	const { addToast } = useToasts();
 
 	// Authentication
 	if (sessionLoading) return null;
@@ -29,8 +32,11 @@ const PaymentsAdd = () => {
 		}
 
 		const result = await context.setPayer(payerIdField.current.value);
-		// TODO: Handle Error
-		if (!result) {
+		if (!result.result) {
+			addToast(result.errors.join(", "), {
+				appearance: "error",
+				autoDismiss: true,
+			});
 			return;
 		}
 
@@ -41,8 +47,11 @@ const PaymentsAdd = () => {
 		event.preventDefault();
 		const result = await context.addItem(itemIdField.current.value);
 
-		// TODO: Handle Error
-		if (!result) {
+		if (!result.result) {
+			addToast(result.errors.join(", "), {
+				appearance: "error",
+				autoDismiss: true,
+			});
 			return;
 		}
 
@@ -60,11 +69,18 @@ const PaymentsAdd = () => {
 	const createPaymentHandler = async () => {
 		const result = await context.createPayment();
 
-		// TODO: Handle Error
-		if (!result) {
+		if (!result.result) {
+			addToast(result.errors.join(", "), {
+				appearance: "error",
+				autoDismiss: true,
+			});
 			return;
 		}
 
+		addToast("Payment Recorded", {
+			appearance: "success",
+			autoDismiss: true,
+		});
 		clearFormHandler();
 	};
 
