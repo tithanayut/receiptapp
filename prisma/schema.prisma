@@ -46,9 +46,9 @@ model Payment {
 
 model PaymentDetail {
   id        Int     @id @default(autoincrement())
-  index     Int
   Payment   Payment @relation(fields: [paymentId], references: [id])
   paymentId Int
+  index     Int
   Item      Item    @relation(fields: [itemId], references: [id])
   itemId    String
   price     Float
