@@ -51,11 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 		payment.AppUser.displayname;
 	document.getElementById("paymentDate").textContent = paymentDateText;
 
-	if (payment.PaymentDetail.length > 10) {
-		document.getElementById("payment-error").textContent =
-			"Length of the table exceeds A5 page. Consider print on A4 receipt instead.";
-		return;
-	}
 	payment.PaymentDetail.forEach((item) => {
 		const row = document.createElement("tr");
 		row.innerHTML = `<td class="itemId">${item.Item.id}</td><td>${

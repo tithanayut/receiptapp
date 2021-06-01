@@ -2,6 +2,17 @@
 
 @page {
 	size: A5 landscape;
+	margin-top: 5mm;
+}
+
+@page :first {
+	margin-top: 0mm;
+}
+
+body.A5.landscape .sheet {
+	overflow: visible;
+	height: auto !important;
+	min-height: 147mm;
 }
 
 body {
