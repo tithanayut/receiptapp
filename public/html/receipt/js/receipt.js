@@ -44,12 +44,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 	// Fill fields
 	document.getElementById("paymentId").textContent =
 		config.paymentIdPrefix + payment.id;
+	document.getElementById("paymentId-footer").textContent =
+		config.paymentIdPrefix + payment.id;
 	document.getElementById("payerId").textContent = payment.Payer.id;
 	document.getElementById("payerName").textContent = payment.Payer.name;
 	document.getElementById("payerNotes").textContent = payment.Payer.notes;
 	document.getElementById("appUserDisplayname").textContent =
 		payment.AppUser.displayname;
 	document.getElementById("paymentDate").textContent = paymentDateText;
+
+	const currentDate = new Date();
+	document.getElementById("printedAt").textContent =
+		currentDate.getDate() +
+		"/" +
+		(currentDate.getMonth() + 1) +
+		"/" +
+		currentDate.getFullYear() +
+		" " +
+		currentDate.getHours() +
+		":" +
+		currentDate.getMinutes() +
+		":" +
+		currentDate.getSeconds();
 
 	payment.PaymentDetail.forEach((item) => {
 		const row = document.createElement("tr");
