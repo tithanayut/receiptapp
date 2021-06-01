@@ -117,7 +117,7 @@ const handler = async (req, res) => {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
 				if (err.code === "P2002") {
 					return res.status(409).json({
-						errors: ["Item with this ID already exists."],
+						errors: ["Item with this ID already exists"],
 					});
 				}
 			}

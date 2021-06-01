@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const payment = await fetchPayment(paymentId);
 	if (payment.errors) {
 		document.getElementById("payment-error").textContent =
-			"Error: Unable to find payment with this ID.";
+			"Error: Unable to find payment with this ID";
 		return;
 	}
 

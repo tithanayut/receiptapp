@@ -52,7 +52,7 @@ const AppContextProvider = (props) => {
 	};
 
 	const setItemPrice = (itemIndex, price) => {
-		let result = { result: false, errors: ["Cannot update item price."] };
+		let result = { result: false, errors: ["Cannot update item price"] };
 
 		const updatedItems = items.map((item, index) => {
 			if (index === itemIndex) {
@@ -76,7 +76,7 @@ const AppContextProvider = (props) => {
 		if (!payerInfo || items.length === 0) {
 			return {
 				result: false,
-				errors: ["Form not completed. Please add both payer and item data."],
+				errors: ["Form not completed: Please validate all inputs"],
 			};
 		}
 

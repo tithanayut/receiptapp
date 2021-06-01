@@ -145,7 +145,7 @@ const handler = async (req, res) => {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
 				if (err.code === "P2025") {
 					return res.status(409).json({
-						errors: ["Payer or item with some ID does not exist."],
+						errors: ["Payer or item with some ID does not exist"],
 					});
 				}
 			}
