@@ -105,10 +105,10 @@ const Payments = () => {
 												{paymentDate.getDate()}/{paymentDate.getMonth() + 1}/
 												{paymentDate.getFullYear()}
 											</td>
-											<td className="w-1/4 ">
-												{payment.Payer.id} - {payment.Payer.name}
+											<td className="w-1/4 text-center">
+												{payment.Payer.name} ({payment.Payer.id})
 											</td>
-											<td className="w-1/6">
+											<td className="w-1/6 text-center">
 												{payment.AppUser.displayname} (
 												{payment.AppUser.username})
 											</td>
