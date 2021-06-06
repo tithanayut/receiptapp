@@ -91,7 +91,7 @@ const AppContextProvider = (props) => {
 			return { result: false, errors: data.errors };
 		} else {
 			clear();
-			return { result: true };
+			return { result: true, paymentId: data.data.id };
 		}
 	};
 

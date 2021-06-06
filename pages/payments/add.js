@@ -81,6 +81,10 @@ const PaymentsAdd = () => {
 			appearance: "success",
 			autoDismiss: true,
 		});
+
+		window.open(
+			"/html/receipt/receipt.html?id=" + encodeURIComponent(result.paymentId)
+		);
 		clearFormHandler();
 	};
 
