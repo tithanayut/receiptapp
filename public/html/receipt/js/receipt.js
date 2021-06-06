@@ -81,4 +81,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 		2
 	)}</td>`;
 	document.getElementById("payment-details").appendChild(row);
+
+	// Show print dialog and closed after print if configured
+	if (urlParams.get("action") === "print") {
+		setTimeout(() => {
+			window.print();
+		}, 500);
+		window.onfocus = () => {
+			setTimeout(() => {
+				window.close();
+			}, 500);
+		};
+	}
 });
