@@ -90,6 +90,7 @@ const Payments = () => {
 									<th>Payer</th>
 									<th>Created By</th>
 									<th>Status</th>
+									<th>Receipt</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -112,8 +113,10 @@ const Payments = () => {
 												{payment.AppUser.displayname} (
 												{payment.AppUser.username})
 											</td>
-											<td className="w-1/4 text-center">
+											<td className="w-1/12 text-center">
 												{payment.isactive ? "Completed" : "Cancelled"}
+											</td>
+											<td className="w-1/6 text-center">
 												<a
 													href={`/html/receipt/receipt.html?id=${encodeURIComponent(
 														payment.id
@@ -122,7 +125,7 @@ const Payments = () => {
 													target="_blank"
 												>
 													<svg
-														className="inline text-theme-main w-6 h-6 ml-2 cursor-pointer"
+														className="inline text-theme-main w-6 h-6 mr-4 cursor-pointer"
 														fill="none"
 														stroke="currentColor"
 														viewBox="0 0 24 24"
@@ -144,7 +147,7 @@ const Payments = () => {
 													target="_blank"
 												>
 													<svg
-														className="inline text-theme-main w-6 h-6 ml-2 cursor-pointer"
+														className="inline text-theme-main w-6 h-6 cursor-pointer"
 														fill="none"
 														stroke="currentColor"
 														viewBox="0 0 24 24"
