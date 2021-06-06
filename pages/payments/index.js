@@ -108,17 +108,38 @@ const Payments = () => {
 											<td className="w-1/4 ">
 												{payment.Payer.id} - {payment.Payer.name}
 											</td>
-											<td className="w-1/4">
+											<td className="w-1/6">
 												{payment.AppUser.displayname} (
 												{payment.AppUser.username})
 											</td>
-											<td className="w-1/6 text-center">
+											<td className="w-1/4 text-center">
 												{payment.isactive ? "Completed" : "Cancelled"}
 												<a
-													href={
-														"/html/receipt/receipt.html?id=" +
-														encodeURIComponent(payment.id)
-													}
+													href={`/html/receipt/receipt.html?id=${encodeURIComponent(
+														payment.id
+													)}`}
+													rel="noopener noreferrer"
+													target="_blank"
+												>
+													<svg
+														className="inline text-theme-main w-6 h-6 ml-2 cursor-pointer"
+														fill="none"
+														stroke="currentColor"
+														viewBox="0 0 24 24"
+														xmlns="http://www.w3.org/2000/svg"
+													>
+														<path
+															strokeLinecap="round"
+															strokeLinejoin="round"
+															strokeWidth={2}
+															d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+														/>
+													</svg>
+												</a>
+												<a
+													href={`/html/receipt/receipt.html?id=${encodeURIComponent(
+														payment.id
+													)}&action=print`}
 													rel="noopener noreferrer"
 													target="_blank"
 												>
