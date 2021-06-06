@@ -83,7 +83,9 @@ const PaymentsAdd = () => {
 		});
 
 		window.open(
-			"/html/receipt/receipt.html?id=" + encodeURIComponent(result.paymentId)
+			`/html/receipt/receipt.html?id=${encodeURIComponent(
+				result.paymentId
+			)}&action=print`
 		);
 		clearFormHandler();
 	};
