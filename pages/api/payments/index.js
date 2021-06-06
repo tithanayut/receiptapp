@@ -44,7 +44,7 @@ const handler = async (req, res) => {
 					skip: (page - 1) * paymentsPerPage,
 					take: paymentsPerPage,
 					orderBy: {
-						id: "asc",
+						date: "desc",
 					},
 					include: {
 						Payer: true,
