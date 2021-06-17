@@ -5,6 +5,7 @@ export const AppContext = createContext({
 	items: [],
 	setPayer: async () => {},
 	addItem: async () => {},
+	removeItem: () => {},
 	setItemPrice: () => {},
 	createPayment: async () => {},
 	clear: () => {},
@@ -49,6 +50,11 @@ const AppContextProvider = (props) => {
 		});
 		setItems(updatedItems);
 		return { result: true };
+	};
+
+	const removeItem = (itemIndex) => {
+		const updatedItems = items.filter((_, index) => index !== itemIndex);
+		setItems(updatedItems);
 	};
 
 	const setItemPrice = (itemIndex, price) => {
@@ -107,6 +113,7 @@ const AppContextProvider = (props) => {
 				items,
 				setPayer,
 				addItem,
+				removeItem,
 				setItemPrice,
 				createPayment,
 				clear,
