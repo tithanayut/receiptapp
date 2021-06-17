@@ -248,7 +248,6 @@ const PaymentsAdd = () => {
 													step=".01"
 													defaultValue={item.price}
 													onChange={(event) => {
-														console.log(event.target.value);
 														context.setItemPrice(index, event.target.value);
 													}}
 												/>
