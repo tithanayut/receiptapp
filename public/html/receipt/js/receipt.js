@@ -11,6 +11,10 @@ async function fetchPayment(id) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+	const intl = new Intl.NumberFormat("en-US", {
+		minimumFractionDigits: 2,
+	});
+
 	// Fetch receipt config and fill fields
 	const config = await fetchConfig();
 	document.getElementById("orgName").textContent = config.receiptConfig.orgName;
@@ -71,15 +75,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 		const row = document.createElement("tr");
 		row.innerHTML = `<td class="itemId">${item.Item.id}</td><td>${
 			item.Item.name
-		}</td><td class="itemPrice">${item.price.toFixed(2)}</td>`;
+		}</td><td class="itemPrice">${intl.format(item.price)}</td>`;
 		document.getElementById("payment-details").appendChild(row);
 	});
 
+	// Format total price
+	const priceTxt = intl.format(payment.sum.price);
+
 	// Fill total amt.
 	const row = document.createElement("tr");
-	row.innerHTML = `<td colspan="2" id="payment-total-label">Total Amount</td><td id="payment-total">${payment.sum.price.toFixed(
-		2
-	)}</td>`;
+	row.innerHTML = `<td colspan="2" id="payment-total-label">Total Amount</td><td id="payment-total">${priceTxt}</td>`;
 	document.getElementById("payment-details").appendChild(row);
 
 	// Show print dialog and closed after print if configured
