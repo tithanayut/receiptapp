@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { Provider } from "next-auth/client";
+import NextNProgress from "nextjs-progressbar";
 import { ToastProvider } from "react-toast-notifications";
 import AppContextProvider from "../store/context";
 import Layout from "../components/Layout/Layout";
@@ -12,6 +13,7 @@ function App({ Component, pageProps }) {
 				<title>Receiptapp</title>
 				<link rel="icon" href="/favicon.svg" />
 			</Head>
+			<NextNProgress color="#FFBF00" height={4} />
 			<ToastProvider placement="top-center">
 				<AppContextProvider>
 					<Layout>
